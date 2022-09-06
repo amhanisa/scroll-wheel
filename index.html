@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SCROLL</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --height: 125px;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        font-family: "Plus Jakarta Sans";
+        font-size: 30px;
+      }
+      body {
+        background-image: url('bg.jpg');
+        background-size: cover;
+      }
+      .wrapper {
+        height: 100vh;
+        display: flex;
+        justify-items: center;
+        align-items: center;
+      }
+
+      .box {
+        height: calc(5 * var(--height));
+        width: 100%;
+        overflow: hidden;
+        /* background: blue; */
+        position: absolute;
+        box-shadow: 1rem rgb(255, 255, 255);
+      }
+
+      .winner {
+        display: none;
+        border: 4px solid white;
+        height: var(--height);
+        width: 50%;
+        position: absolute;
+        left: 25%;
+        top: calc(2 * var(--height));
+      }
+
+      .list {
+        color: white;
+        text-align: center;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .animate {
+        transition: top 30s;
+        transition-timing-function: cubic-bezier(0.42, 0, 0.00005, 1);
+        /* -webkit-animation: image_blur 30s; */
+      }
+
+      @-webkit-keyframes image_blur {
+        0% {
+          -webkit-filter: blur(0px);
+        }
+        50% {
+          -webkit-filter: blur(1px);
+        }
+        100% {
+          -webkit-filter: blur(0px);
+        }
+      }
+
+      .list-item {
+        height: var(--height);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="box">
+        <div class="winner"></div>
+        <div class="list">
+          <img class="list-item" src="1.png"></img>
+          <img class="list-item" src="2.png"></img>
+          <img class="list-item" src="3.png"></img>
+          <img class="list-item" src="4.png"></img>
+          <img class="list-item" src="5.png"></img>
+
+        </div>
+      </div>
+    </div>
+  </body>
+  <script>
+    const itemHeight = 125;
+    const itemQuantity = 11;
+    const loop = 10;
+
+    let content = document.querySelector(".list");
+    for (let i = 0; i < loop; i++) {
+      content.innerHTML += content.innerHTML;
+    }
+
+    document.querySelector(".box").addEventListener("click", function () {
+      console.log("let it scroll");
+
+      let winner = document.querySelector(".winner");
+
+      winner.style.display = "block";
+
+      let e = document.querySelector(".list");
+      //   e.style.top = 0 + "px";
+
+      e.classList.add("animate");
+      setTimeout(() => e.classList.remove("animate"), 30000);
+
+      const scroll =
+        -1 *
+        (loop * itemHeight * itemQuantity +
+          Math.floor(Math.random() * itemQuantity) * itemHeight);
+
+      console.log(scroll);
+      e.style.top = scroll + "px";
+      //   e.style.left = Math.floor(Math.random() * window.innerWidth) + "px";
+    });
+  </script>
+</html>
